@@ -11,7 +11,7 @@
   "require": {
     "php": ">=7.1",
     "spryker/store": "^1.1",
-    "spryker/sequence-number": "^0.20",
+    "spryker/sequence-number": "^1.0",
     "spryker/company-user-extension": "^1.0"
   },
   "require-dev": {
