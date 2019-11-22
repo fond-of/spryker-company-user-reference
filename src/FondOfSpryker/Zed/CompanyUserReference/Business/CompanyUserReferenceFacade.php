@@ -21,7 +21,7 @@ class CompanyUserReferenceFacade extends AbstractFacade implements CompanyUserRe
      */
     public function generateCompanyUserReference(): string
     {
-       // TODO: Implement generateCompanyUserReference() method.
+        $this->getFactory()->createCompanyUserReferenceGenerator()->generate();
     }
 
     /**
@@ -36,6 +36,7 @@ class CompanyUserReferenceFacade extends AbstractFacade implements CompanyUserRe
     public function findCompanyUserByCompanyUserReference(
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserResponseTransfer {
-        // TODO: Implement findCompanyUserByCompanyUserReference() method.
+        return $this->getFactory()->createCompanyUserReader()
+            ->findCompanyUserByCompanyUserReference($companyUserTransfer);
     }
 }

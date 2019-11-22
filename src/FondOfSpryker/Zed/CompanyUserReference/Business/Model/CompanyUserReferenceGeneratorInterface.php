@@ -7,5 +7,5 @@ interface CompanyUserReferenceGeneratorInterface
     /**
      * @return string
      */
-    public function generateCompanyUserReference(): string;
+    public function generate(): string;
 }

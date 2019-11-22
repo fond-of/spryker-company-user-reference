@@ -2,6 +2,8 @@
 
 namespace FondOfSpryker\Zed\CompanyUserReference\Business;
 
+use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReader;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGenerator;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGeneratorInterface;
 use FondOfSpryker\Zed\CompanyUserReference\CompanyUserReferenceDependencyProvider;
@@ -15,6 +17,29 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CompanyUserReferenceBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGeneratorInterface
+     */
+    public function createCompanyUserReferenceGenerator(): CompanyUserReferenceGeneratorInterface
+    {
+        return new CompanyUserReferenceGenerator(
+            $this->getSequenceNumberFacade(),
+            $this->getStoreFacade(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReaderInterface
+     */
+    public function createCompanyUserReader(): CompanyUserReaderInterface
+    {
+        return new CompanyUserReader(
+            $this->getRepository(),
+            $this->getCompanyUserHydrationPlugins()
+        );
+    }
+
     /**
      * @throws
      *
@@ -36,14 +61,12 @@ class CompanyUserReferenceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGeneratorInterface
+     * @throws
+     *
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
-    public function createCompanyUserReferenceGenerator(): CompanyUserReferenceGeneratorInterface
+    protected function getCompanyUserHydrationPlugins(): array
     {
-        return new CompanyUserReferenceGenerator(
-            $this->getSequenceNumberFacade(),
-            $this->getStoreFacade(),
-            $this->getConfig()
-        );
+        return $this->getProvidedDependency(CompanyUserReferenceDependencyProvider::PLUGINS_COMPANY_USER_HYDRATE);
     }
 }

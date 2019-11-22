@@ -43,7 +43,7 @@ class CompanyUserReferenceGenerator implements CompanyUserReferenceGeneratorInte
     /**
      * @return string
      */
-    public function generateCompanyUserReference(): string
+    public function generate(): string
     {
         $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsTransfer())
             ->setName(CompanyUserReferenceConstants::NAME_COMPANY_USER_REFERENCE)
