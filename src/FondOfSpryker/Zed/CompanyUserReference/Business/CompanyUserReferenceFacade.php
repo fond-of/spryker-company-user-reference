@@ -21,7 +21,7 @@ class CompanyUserReferenceFacade extends AbstractFacade implements CompanyUserRe
      */
     public function generateCompanyUserReference(): string
     {
-        $this->getFactory()->createCompanyUserReferenceGenerator()->generate();
+        return $this->getFactory()->createCompanyUserReferenceGenerator()->generate();
     }
 
     /**
