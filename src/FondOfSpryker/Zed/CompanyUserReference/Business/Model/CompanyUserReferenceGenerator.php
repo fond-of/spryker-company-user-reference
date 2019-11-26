@@ -49,7 +49,7 @@ class CompanyUserReferenceGenerator implements CompanyUserReferenceGeneratorInte
             ->setName(CompanyUserReferenceConstants::NAME_COMPANY_USER_REFERENCE)
             ->setPrefix($this->getPrefix());
 
-        return $sequenceNumberSettingsTransfer;
+        return $this->sequenceNumberFacade->generate($sequenceNumberSettingsTransfer);
     }
 
     /**
