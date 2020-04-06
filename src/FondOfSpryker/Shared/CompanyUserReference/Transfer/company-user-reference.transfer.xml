@@ -6,4 +6,14 @@
     <transfer name="CompanyUser">
         <property name="companyUserReference" type="string"/>
     </transfer>
+
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyUserResponse">
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
 </transfers>

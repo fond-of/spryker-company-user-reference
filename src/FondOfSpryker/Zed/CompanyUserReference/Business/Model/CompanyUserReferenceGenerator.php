@@ -53,7 +53,7 @@ class CompanyUserReferenceGenerator implements CompanyUserReferenceGeneratorInte
     }
 
     /**
-     * @return void
+     * @return string
      */
     protected function getPrefix(): string
     {

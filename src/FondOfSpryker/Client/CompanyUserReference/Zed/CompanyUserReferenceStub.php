@@ -9,7 +9,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 class CompanyUserReferenceStub implements CompanyUserReferenceStubInterface
 {
     /**
-     * @var \FondOfSpryker\Client\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToZedRequestClientInterface
+     * @var \FondOfSpryker\Client\CompanyUserReference\Dependency\Client\CompanyUserReferenceToZedRequestClientInterface
      */
     protected $zedRequestClient;
 
