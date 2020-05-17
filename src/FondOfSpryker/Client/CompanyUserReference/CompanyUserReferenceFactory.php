@@ -18,8 +18,6 @@ class CompanyUserReferenceFactory extends AbstractFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Client\CompanyUserReference\Dependency\Client\CompanyUserReferenceToZedRequestClientInterface
      */
     protected function getZedRequestClient(): CompanyUserReferenceToZedRequestClientInterface

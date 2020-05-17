@@ -13,8 +13,6 @@ class CompanyUserReferenceRepository extends AbstractRepository implements Compa
     /**
      * @param string $companyUserReference
      *
-     * @throws
-     *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findCompanyUserByCompanyUserReference(string $companyUserReference): ?CompanyUserTransfer

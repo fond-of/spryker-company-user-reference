@@ -41,8 +41,6 @@ class CompanyUserReferenceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToStoreFacadeInterface
      */
     protected function getStoreFacade(): CompanyUserReferenceToStoreFacadeInterface
@@ -51,8 +49,6 @@ class CompanyUserReferenceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToSequenceNumberFacadeInterface
      */
     protected function getSequenceNumberFacade(): CompanyUserReferenceToSequenceNumberFacadeInterface
@@ -61,8 +57,6 @@ class CompanyUserReferenceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @throws
-     *
      * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
      */
     protected function getCompanyUserHydrationPlugins(): array
