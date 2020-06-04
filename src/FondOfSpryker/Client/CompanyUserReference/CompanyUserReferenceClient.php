@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractClient;
 class CompanyUserReferenceClient extends AbstractClient implements CompanyUserReferenceClientInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CompanyUserReferenceFacade extends AbstractFacade implements CompanyUserReferenceFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -25,7 +25,7 @@ class CompanyUserReferenceFacade extends AbstractFacade implements CompanyUserRe
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
