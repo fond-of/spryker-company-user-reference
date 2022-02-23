@@ -3,8 +3,8 @@
 namespace FondOfSpryker\Zed\CompanyUserReference\Business;
 
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReaderInterface;
-use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGeneratorInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGeneratorInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\CompanyUserReferenceConfig;
 use FondOfSpryker\Zed\CompanyUserReference\CompanyUserReferenceDependencyProvider;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToSequenceNumberFacadeInterface;
@@ -88,15 +88,15 @@ class CompanyUserReferenceBusinessFactoryTest extends Unit
             ->method('get')
             ->withConsecutive(
                 [CompanyUserReferenceDependencyProvider::FACADE_SEQUENCE_NUMBER],
-                [CompanyUserReferenceDependencyProvider::FACADE_STORE]
+                [CompanyUserReferenceDependencyProvider::FACADE_STORE],
             )->willReturnOnConsecutiveCalls(
                 $this->companyUserReferenceToSequenceNumberFacadeInterfaceMock,
-                $this->companyUserReferenceToStoreFacadeInterfaceMock
+                $this->companyUserReferenceToStoreFacadeInterfaceMock,
             );
 
         $this->assertInstanceOf(
             CompanyUserReferenceGeneratorInterface::class,
-            $this->companyUserReferenceBusinessFactory->createCompanyUserReferenceGenerator()
+            $this->companyUserReferenceBusinessFactory->createCompanyUserReferenceGenerator(),
         );
     }
 
@@ -116,7 +116,7 @@ class CompanyUserReferenceBusinessFactoryTest extends Unit
 
         $this->assertInstanceOf(
             CompanyUserReaderInterface::class,
-            $this->companyUserReferenceBusinessFactory->createCompanyUserReader()
+            $this->companyUserReferenceBusinessFactory->createCompanyUserReader(),
         );
     }
 }

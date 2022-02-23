@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfSpryker\Zed\CompanyUserReference\Business\Model;
+namespace FondOfSpryker\Zed\CompanyUserReference\Business\Generator;
 
 interface CompanyUserReferenceGeneratorInterface
 {

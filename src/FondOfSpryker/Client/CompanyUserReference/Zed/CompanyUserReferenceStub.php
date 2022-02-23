@@ -31,7 +31,7 @@ class CompanyUserReferenceStub implements CompanyUserReferenceStubInterface
         /** @var \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer */
         $companyUserResponseTransfer = $this->zedRequestClient->call(
             '/company-user-reference/gateway/find-company-user-by-company-user-reference',
-            $companyUserTransfer
+            $companyUserTransfer,
         );
 
         return $companyUserResponseTransfer;

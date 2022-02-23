@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfSpryker\Zed\CompanyUserReference\Business\Model;
+namespace FondOfSpryker\Zed\CompanyUserReference\Business\Generator;
 
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyUserReference\CompanyUserReferenceConfig;
@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 class CompanyUserReferenceGeneratorTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGenerator
+     * @var \FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGenerator
      */
     protected $companyUserReferenceGenerator;
 
@@ -80,7 +80,7 @@ class CompanyUserReferenceGeneratorTest extends Unit
         $this->companyUserReferenceGenerator = new CompanyUserReferenceGenerator(
             $this->companyUserReferenceToSequenceNumberFacadeInterfaceMock,
             $this->companyUserReferenceToStoreFacadeInterfaceMock,
-            $this->companyUserReferenceConfigMock
+            $this->companyUserReferenceConfigMock,
         );
     }
 
@@ -107,7 +107,7 @@ class CompanyUserReferenceGeneratorTest extends Unit
 
         $this->assertSame(
             $this->generatedString,
-            $this->companyUserReferenceGenerator->generate()
+            $this->companyUserReferenceGenerator->generate(),
         );
     }
 }

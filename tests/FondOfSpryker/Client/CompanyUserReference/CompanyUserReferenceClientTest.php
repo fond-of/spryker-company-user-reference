@@ -76,8 +76,8 @@ class CompanyUserReferenceClientTest extends Unit
         $this->assertInstanceOf(
             CompanyUserResponseTransfer::class,
             $this->companyUserReferenceClient->findCompanyUserByCompanyUserReference(
-                $this->companyUserTransferMock
-            )
+                $this->companyUserTransferMock,
+            ),
         );
     }
 }

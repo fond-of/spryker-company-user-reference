@@ -3,8 +3,8 @@
 namespace FondOfSpryker\Zed\CompanyUserReference\Business;
 
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReaderInterface;
-use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGeneratorInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGeneratorInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
@@ -26,7 +26,7 @@ class CompanyUserReferenceFacadeTest extends Unit
     protected $companyUserReferenceBusinessFactoryMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGeneratorInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGeneratorInterface
      */
     protected $companyUserReferenceGeneratorInterfaceMock;
 
@@ -36,7 +36,7 @@ class CompanyUserReferenceFacadeTest extends Unit
     protected $companyUserTransferMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReaderInterface
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface
      */
     protected $companyUserReaderInterfaceMock;
 
@@ -91,7 +91,7 @@ class CompanyUserReferenceFacadeTest extends Unit
 
         $this->assertSame(
             $this->generatedString,
-            $this->companyUserReferenceFacade->generateCompanyUserReference()
+            $this->companyUserReferenceFacade->generateCompanyUserReference(),
         );
     }
 
@@ -112,8 +112,8 @@ class CompanyUserReferenceFacadeTest extends Unit
         $this->assertInstanceOf(
             CompanyUserResponseTransfer::class,
             $this->companyUserReferenceFacade->findCompanyUserByCompanyUserReference(
-                $this->companyUserTransferMock
-            )
+                $this->companyUserTransferMock,
+            ),
         );
     }
 }

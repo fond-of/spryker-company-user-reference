@@ -37,7 +37,7 @@ class CompanyUserReferenceToStoreFacadeBridgeTest extends Unit
             ->getMock();
 
         $this->companyUserReferenceToStoreFacadeBridge = new CompanyUserReferenceToStoreFacadeBridge(
-            $this->storeFacadeInterfaceMock
+            $this->storeFacadeInterfaceMock,
         );
     }
 
@@ -52,7 +52,7 @@ class CompanyUserReferenceToStoreFacadeBridgeTest extends Unit
 
         $this->assertInstanceOf(
             StoreTransfer::class,
-            $this->companyUserReferenceToStoreFacadeBridge->getCurrentStore()
+            $this->companyUserReferenceToStoreFacadeBridge->getCurrentStore(),
         );
     }
 }

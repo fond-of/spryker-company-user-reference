@@ -10,11 +10,24 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_HYDRATE = 'PLUGINS_COMPANY_USER_HYDRATE';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
 
     /**
@@ -42,7 +55,7 @@ class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_SEQUENCE_NUMBER] = static function (Container $container) {
             return new CompanyUserReferenceToSequenceNumberFacadeBridge(
-                $container->getLocator()->sequenceNumber()->facade()
+                $container->getLocator()->sequenceNumber()->facade(),
             );
         };
 
@@ -58,7 +71,7 @@ class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyPro
     {
         $container[static::FACADE_STORE] = static function (Container $container) {
             return new CompanyUserReferenceToStoreFacadeBridge(
-                $container->getLocator()->store()->facade()
+                $container->getLocator()->store()->facade(),
             );
         };
 
@@ -108,7 +121,7 @@ class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface>
      */
     protected function getCompanyUserHydrationPlugins(): array
     {

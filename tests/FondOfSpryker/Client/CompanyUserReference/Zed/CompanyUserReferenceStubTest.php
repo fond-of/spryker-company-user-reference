@@ -54,7 +54,7 @@ class CompanyUserReferenceStubTest extends Unit
         $this->url = '/company-user-reference/gateway/find-company-user-by-company-user-reference';
 
         $this->companyUserReferenceStub = new CompanyUserReferenceStub(
-            $this->companyUserReferenceToZedRequestClientInterfaceMock
+            $this->companyUserReferenceToZedRequestClientInterfaceMock,
         );
     }
 
@@ -67,14 +67,14 @@ class CompanyUserReferenceStubTest extends Unit
             ->method('call')
             ->with(
                 $this->url,
-                $this->companyUserTransferMock
+                $this->companyUserTransferMock,
             )->willReturn($this->companyUserResponseTransferMock);
 
         $this->assertInstanceOf(
             CompanyUserResponseTransfer::class,
             $this->companyUserReferenceStub->findCompanyUserByCompanyUserReference(
-                $this->companyUserTransferMock
-            )
+                $this->companyUserTransferMock,
+            ),
         );
     }
 }

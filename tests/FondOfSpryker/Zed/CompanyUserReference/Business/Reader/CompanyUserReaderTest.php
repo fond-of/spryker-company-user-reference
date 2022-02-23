@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfSpryker\Zed\CompanyUserReference\Business\Model;
+namespace FondOfSpryker\Zed\CompanyUserReference\Business\Reader;
 
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyUserReference\Persistence\CompanyUserReferenceRepositoryInterface;
@@ -11,7 +11,7 @@ use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPlugi
 class CompanyUserReaderTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReader
+     * @var \FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReader
      */
     protected $companyUserReader;
 
@@ -21,7 +21,7 @@ class CompanyUserReaderTest extends Unit
     protected $companyUserReferenceRepositoryInterfaceMock;
 
     /**
-     * @var \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface>
      */
     protected $companyUserHydrationPlugins;
 
@@ -65,7 +65,7 @@ class CompanyUserReaderTest extends Unit
 
         $this->companyUserReader = new CompanyUserReader(
             $this->companyUserReferenceRepositoryInterfaceMock,
-            $this->companyUserHydrationPlugins
+            $this->companyUserHydrationPlugins,
         );
     }
 
@@ -91,8 +91,8 @@ class CompanyUserReaderTest extends Unit
         $this->assertInstanceOf(
             CompanyUserResponseTransfer::class,
             $this->companyUserReader->findCompanyUserByCompanyUserReference(
-                $this->companyUserTransferMock
-            )
+                $this->companyUserTransferMock,
+            ),
         );
     }
 
@@ -113,8 +113,8 @@ class CompanyUserReaderTest extends Unit
         $this->assertInstanceOf(
             CompanyUserResponseTransfer::class,
             $this->companyUserReader->findCompanyUserByCompanyUserReference(
-                $this->companyUserTransferMock
-            )
+                $this->companyUserTransferMock,
+            ),
         );
     }
 }

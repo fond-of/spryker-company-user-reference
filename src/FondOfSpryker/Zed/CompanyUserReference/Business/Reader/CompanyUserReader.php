@@ -1,6 +1,6 @@
 <?php
 
-namespace FondOfSpryker\Zed\CompanyUserReference\Business\Model;
+namespace FondOfSpryker\Zed\CompanyUserReference\Business\Reader;
 
 use FondOfSpryker\Zed\CompanyUserReference\Persistence\CompanyUserReferenceRepositoryInterface;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
@@ -9,6 +9,9 @@ use Generated\Shared\Transfer\ResponseMessageTransfer;
 
 class CompanyUserReader implements CompanyUserReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_USER_NOT_FOUND = 'message.company_user.not_found';
 
     /**
@@ -17,13 +20,13 @@ class CompanyUserReader implements CompanyUserReaderInterface
     protected $repository;
 
     /**
-     * @var \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface>
      */
     protected $companyUserHydrationPlugins;
 
     /**
      * @param \FondOfSpryker\Zed\CompanyUserReference\Persistence\CompanyUserReferenceRepositoryInterface $repository
-     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[] $companyUserHydrationPlugins
+     * @param array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface> $companyUserHydrationPlugins
      */
     public function __construct(
         CompanyUserReferenceRepositoryInterface $repository,
@@ -42,7 +45,7 @@ class CompanyUserReader implements CompanyUserReaderInterface
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserResponseTransfer {
         $companyUserTransfer = $this->repository->findCompanyUserByCompanyUserReference(
-            $companyUserTransfer->getCompanyUserReference()
+            $companyUserTransfer->getCompanyUserReference(),
         );
 
         $companyUserResponseTransfer = new CompanyUserResponseTransfer();

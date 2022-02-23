@@ -2,10 +2,10 @@
 
 namespace FondOfSpryker\Zed\CompanyUserReference\Business;
 
-use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReader;
-use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReaderInterface;
-use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGenerator;
-use FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGeneratorInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGenerator;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGeneratorInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReader;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\CompanyUserReferenceDependencyProvider;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToSequenceNumberFacadeInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToStoreFacadeInterface;
@@ -18,25 +18,25 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class CompanyUserReferenceBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReferenceGeneratorInterface
+     * @return \FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGeneratorInterface
      */
     public function createCompanyUserReferenceGenerator(): CompanyUserReferenceGeneratorInterface
     {
         return new CompanyUserReferenceGenerator(
             $this->getSequenceNumberFacade(),
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
         );
     }
 
     /**
-     * @return \FondOfSpryker\Zed\CompanyUserReference\Business\Model\CompanyUserReaderInterface
+     * @return \FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface
      */
     public function createCompanyUserReader(): CompanyUserReaderInterface
     {
         return new CompanyUserReader(
             $this->getRepository(),
-            $this->getCompanyUserHydrationPlugins()
+            $this->getCompanyUserHydrationPlugins(),
         );
     }
 
@@ -57,7 +57,7 @@ class CompanyUserReferenceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface>
      */
     protected function getCompanyUserHydrationPlugins(): array
     {
