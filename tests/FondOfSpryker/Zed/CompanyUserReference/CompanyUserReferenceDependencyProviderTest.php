@@ -37,8 +37,8 @@ class CompanyUserReferenceDependencyProviderTest extends Unit
         $this->assertInstanceOf(
             Container::class,
             $this->companyUserReferenceDependencyProvider->provideBusinessLayerDependencies(
-                $this->containerMock
-            )
+                $this->containerMock,
+            ),
         );
     }
 }

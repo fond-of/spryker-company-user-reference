@@ -29,7 +29,7 @@ class CompanyUserReferenceRepository extends AbstractRepository implements Compa
 
         $companyUserTransfer = (new CompanyUserTransfer())->fromArray(
             $companyUserEntityTransfer->toArray(),
-            true
+            true,
         );
 
         return $companyUserTransfer;

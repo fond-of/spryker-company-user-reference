@@ -57,7 +57,7 @@ class CompanyUserReferenceFactoryTest extends Unit
 
         $this->assertInstanceOf(
             CompanyUserReferenceStubInterface::class,
-            $this->companyUserReferenceFactory->createZedCompanyUserReferenceStub()
+            $this->companyUserReferenceFactory->createZedCompanyUserReferenceStub(),
         );
     }
 }

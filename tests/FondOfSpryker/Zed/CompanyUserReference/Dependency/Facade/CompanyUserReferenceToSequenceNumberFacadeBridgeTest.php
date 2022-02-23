@@ -44,7 +44,7 @@ class CompanyUserReferenceToSequenceNumberFacadeBridgeTest extends Unit
         $this->generatedString = 'generated-string';
 
         $this->companyUserReferenceToSequenceNumberFacadeBridge = new CompanyUserReferenceToSequenceNumberFacadeBridge(
-            $this->sequenceNumberFacadeInterfaceMock
+            $this->sequenceNumberFacadeInterfaceMock,
         );
     }
 
@@ -61,8 +61,8 @@ class CompanyUserReferenceToSequenceNumberFacadeBridgeTest extends Unit
         $this->assertSame(
             $this->generatedString,
             $this->companyUserReferenceToSequenceNumberFacadeBridge->generate(
-                $this->sequenceNumberSettingsTransferMock
-            )
+                $this->sequenceNumberSettingsTransferMock,
+            ),
         );
     }
 }

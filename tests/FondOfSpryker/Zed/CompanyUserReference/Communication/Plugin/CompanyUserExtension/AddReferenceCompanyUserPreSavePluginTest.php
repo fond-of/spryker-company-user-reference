@@ -82,8 +82,8 @@ class AddReferenceCompanyUserPreSavePluginTest extends Unit
         $this->assertInstanceOf(
             CompanyUserResponseTransfer::class,
             $this->addReferenceCompanyUserPreSavePlugin->preSave(
-                $this->companyUserResponseTransferMock
-            )
+                $this->companyUserResponseTransferMock,
+            ),
         );
     }
 }
