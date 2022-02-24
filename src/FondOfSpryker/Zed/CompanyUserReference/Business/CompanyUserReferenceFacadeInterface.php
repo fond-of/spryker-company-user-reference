@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\CompanyUserReference\Business;
 
+use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 
@@ -31,4 +32,19 @@ interface CompanyUserReferenceFacadeInterface
     public function findCompanyUserByCompanyUserReference(
         CompanyUserTransfer $companyUserTransfer
     ): CompanyUserResponseTransfer;
+
+    /**
+     * Specifications:
+     *  - Finds company by reference.
+     *  - Returns company transfer.
+     *
+     * @api
+     *
+     * @param string $companyUserReference
+     *
+     * @return \Generated\Shared\Transfer\CompanyTransfer|null
+     */
+    public function getCompanyByCompanyUserReference(
+        string $companyUserReference
+    ): ?CompanyTransfer;
 }

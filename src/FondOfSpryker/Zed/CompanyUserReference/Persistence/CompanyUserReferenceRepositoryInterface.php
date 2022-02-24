@@ -12,4 +12,11 @@ interface CompanyUserReferenceRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyUserTransfer|null
      */
     public function findCompanyUserByCompanyUserReference(string $companyUserReference): ?CompanyUserTransfer;
+
+    /**
+     * @param string $companyUserReference
+     *
+     * @return int|null
+     */
+    public function findIdCompanyByCompanyUserReference(string $companyUserReference): ?int;
 }
