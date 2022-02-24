@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\CompanyUserReference;
 
+use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToCompanyFacadeBridge;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToSequenceNumberFacadeBridge;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToStoreFacadeBridge;
 use Orm\Zed\CompanyUser\Persistence\SpyCompanyUserQuery;
@@ -10,6 +11,11 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_COMPANY = 'FACADE_COMPANY';
+
     /**
      * @var string
      */
@@ -39,9 +45,25 @@ class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addCompanyUserHydrationPlugins($container);
+        $container = $this->addCompanyFacade($container);
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addStoreFacade($container);
+
+        return $this->addCompanyUserHydrationPlugins($container);
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY] = static function (Container $container) {
+            return new CompanyUserReferenceToCompanyFacadeBridge(
+                $container->getLocator()->company()->facade(),
+            );
+        };
 
         return $container;
     }
@@ -87,9 +109,7 @@ class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container = $this->addCompanyUserPropelQuery($container);
-
-        return $container;
+        return $this->addCompanyUserPropelQuery($container);
     }
 
     /**

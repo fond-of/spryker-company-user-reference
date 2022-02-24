@@ -3,10 +3,12 @@
 namespace FondOfSpryker\Zed\CompanyUserReference\Business;
 
 use Codeception\Test\Unit;
-use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGeneratorInterface;
-use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGenerator;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyReader;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReader;
 use FondOfSpryker\Zed\CompanyUserReference\CompanyUserReferenceConfig;
 use FondOfSpryker\Zed\CompanyUserReference\CompanyUserReferenceDependencyProvider;
+use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToCompanyFacadeInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToSequenceNumberFacadeInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToStoreFacadeInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Persistence\CompanyUserReferenceRepository;
@@ -15,14 +17,9 @@ use Spryker\Zed\Kernel\Container;
 class CompanyUserReferenceBusinessFactoryTest extends Unit
 {
     /**
-     * @var \FondOfSpryker\Zed\CompanyUserReference\Business\CompanyUserReferenceBusinessFactory
-     */
-    protected $companyUserReferenceBusinessFactory;
-
-    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\CompanyUserReferenceConfig
      */
-    protected $companyUserReferenceConfigMock;
+    protected $configMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Container
@@ -30,26 +27,36 @@ class CompanyUserReferenceBusinessFactoryTest extends Unit
     protected $containerMock;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Persistence\CompanyUserReferenceRepository
+     */
+    protected $repositoryMock;
+
+    /**
+     * @var \FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToCompanyFacadeInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $companyFacadeMock;
+
+    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToSequenceNumberFacadeInterface
      */
-    protected $companyUserReferenceToSequenceNumberFacadeInterfaceMock;
+    protected $sequenceNumberFacadeMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToStoreFacadeInterface
      */
-    protected $companyUserReferenceToStoreFacadeInterfaceMock;
+    protected $storeFacadeMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Persistence\CompanyUserReferenceRepository
+     * @var \FondOfSpryker\Zed\CompanyUserReference\Business\CompanyUserReferenceBusinessFactory
      */
-    protected $companyUserReferenceRepositoryMock;
+    protected $factory;
 
     /**
      * @return void
      */
     protected function _before(): void
     {
-        $this->companyUserReferenceConfigMock = $this->getMockBuilder(CompanyUserReferenceConfig::class)
+        $this->configMock = $this->getMockBuilder(CompanyUserReferenceConfig::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -57,22 +64,26 @@ class CompanyUserReferenceBusinessFactoryTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->companyUserReferenceToSequenceNumberFacadeInterfaceMock = $this->getMockBuilder(CompanyUserReferenceToSequenceNumberFacadeInterface::class)
+        $this->repositoryMock = $this->getMockBuilder(CompanyUserReferenceRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->companyUserReferenceToStoreFacadeInterfaceMock = $this->getMockBuilder(CompanyUserReferenceToStoreFacadeInterface::class)
+        $this->companyFacadeMock = $this->getMockBuilder(CompanyUserReferenceToCompanyFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->companyUserReferenceRepositoryMock = $this->getMockBuilder(CompanyUserReferenceRepository::class)
+        $this->sequenceNumberFacadeMock = $this->getMockBuilder(CompanyUserReferenceToSequenceNumberFacadeInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->companyUserReferenceBusinessFactory = new CompanyUserReferenceBusinessFactory();
-        $this->companyUserReferenceBusinessFactory->setRepository($this->companyUserReferenceRepositoryMock);
-        $this->companyUserReferenceBusinessFactory->setConfig($this->companyUserReferenceConfigMock);
-        $this->companyUserReferenceBusinessFactory->setContainer($this->containerMock);
+        $this->storeFacadeMock = $this->getMockBuilder(CompanyUserReferenceToStoreFacadeInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->factory = new CompanyUserReferenceBusinessFactory();
+        $this->factory->setRepository($this->repositoryMock);
+        $this->factory->setConfig($this->configMock);
+        $this->factory->setContainer($this->containerMock);
     }
 
     /**
@@ -80,23 +91,23 @@ class CompanyUserReferenceBusinessFactoryTest extends Unit
      */
     public function testCreateCompanyUserReferenceGenerator(): void
     {
-        $this->containerMock->expects($this->atLeastOnce())
+        $this->containerMock->expects(static::atLeastOnce())
             ->method('has')
             ->willReturn(true);
 
-        $this->containerMock->expects($this->atLeastOnce())
+        $this->containerMock->expects(static::atLeastOnce())
             ->method('get')
             ->withConsecutive(
                 [CompanyUserReferenceDependencyProvider::FACADE_SEQUENCE_NUMBER],
                 [CompanyUserReferenceDependencyProvider::FACADE_STORE],
             )->willReturnOnConsecutiveCalls(
-                $this->companyUserReferenceToSequenceNumberFacadeInterfaceMock,
-                $this->companyUserReferenceToStoreFacadeInterfaceMock,
+                $this->sequenceNumberFacadeMock,
+                $this->storeFacadeMock,
             );
 
-        $this->assertInstanceOf(
-            CompanyUserReferenceGeneratorInterface::class,
-            $this->companyUserReferenceBusinessFactory->createCompanyUserReferenceGenerator(),
+        static::assertInstanceOf(
+            CompanyUserReferenceGenerator::class,
+            $this->factory->createCompanyUserReferenceGenerator(),
         );
     }
 
@@ -105,18 +116,35 @@ class CompanyUserReferenceBusinessFactoryTest extends Unit
      */
     public function testCreateCompanyUserReader(): void
     {
-        $this->containerMock->expects($this->atLeastOnce())
+        $this->containerMock->expects(static::atLeastOnce())
             ->method('has')
             ->willReturn(true);
 
-        $this->containerMock->expects($this->atLeastOnce())
+        $this->containerMock->expects(static::atLeastOnce())
             ->method('get')
             ->with(CompanyUserReferenceDependencyProvider::PLUGINS_COMPANY_USER_HYDRATE)
             ->willReturn([]);
 
-        $this->assertInstanceOf(
-            CompanyUserReaderInterface::class,
-            $this->companyUserReferenceBusinessFactory->createCompanyUserReader(),
-        );
+        static::assertInstanceOf(CompanyUserReader::class, $this->factory->createCompanyUserReader());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateCompanyReader(): void
+    {
+        $this->containerMock->expects(static::atLeastOnce())
+            ->method('has')
+            ->willReturn(true);
+
+        $this->containerMock->expects(static::atLeastOnce())
+            ->method('get')
+            ->withConsecutive(
+                [CompanyUserReferenceDependencyProvider::FACADE_COMPANY],
+            )->willReturnOnConsecutiveCalls(
+                $this->companyFacadeMock,
+            );
+
+        static::assertInstanceOf(CompanyReader::class, $this->factory->createCompanyReader());
     }
 }

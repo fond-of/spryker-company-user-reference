@@ -19,6 +19,7 @@ class CompanyUserReferenceRepository extends AbstractRepository implements Compa
     {
         $query = $this->getFactory()
             ->getCompanyUserPropelQuery()
+            ->clear()
             ->filterByCompanyUserReference($companyUserReference);
 
         $companyUserEntityTransfer = $this->buildQueryFromCriteria($query)->findOne();
@@ -27,11 +28,29 @@ class CompanyUserReferenceRepository extends AbstractRepository implements Compa
             return null;
         }
 
-        $companyUserTransfer = (new CompanyUserTransfer())->fromArray(
+        return (new CompanyUserTransfer())->fromArray(
             $companyUserEntityTransfer->toArray(),
             true,
         );
+    }
 
-        return $companyUserTransfer;
+    /**
+     * @param string $companyUserReference
+     *
+     * @return int|null
+     */
+    public function findIdCompanyByCompanyUserReference(string $companyUserReference): ?int
+    {
+        $entity = $this->getFactory()
+            ->getCompanyUserPropelQuery()
+            ->clear()
+            ->filterByCompanyUserReference($companyUserReference)
+            ->findOne();
+
+        if ($entity === null) {
+            return null;
+        }
+
+        return $entity->getFkCompany();
     }
 }
