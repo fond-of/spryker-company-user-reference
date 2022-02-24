@@ -2,6 +2,7 @@
 
 namespace FondOfSpryker\Zed\CompanyUserReference;
 
+use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToCompanyBusinessUnitFacadeBridge;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToCompanyFacadeBridge;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToSequenceNumberFacadeBridge;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToStoreFacadeBridge;
@@ -15,6 +16,11 @@ class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+
+    /**
+     * @var string
+     */
+    public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
 
     /**
      * @var string
@@ -46,6 +52,7 @@ class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyPro
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addCompanyFacade($container);
+        $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addStoreFacade($container);
 
@@ -62,6 +69,22 @@ class CompanyUserReferenceDependencyProvider extends AbstractBundleDependencyPro
         $container[static::FACADE_COMPANY] = static function (Container $container) {
             return new CompanyUserReferenceToCompanyFacadeBridge(
                 $container->getLocator()->company()->facade(),
+            );
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyBusinessUnitFacade(Container $container): Container
+    {
+        $container[static::FACADE_COMPANY_BUSINESS_UNIT] = static function (Container $container) {
+            return new CompanyUserReferenceToCompanyBusinessUnitFacadeBridge(
+                $container->getLocator()->companyBusinessUnit()->facade(),
             );
         };
 

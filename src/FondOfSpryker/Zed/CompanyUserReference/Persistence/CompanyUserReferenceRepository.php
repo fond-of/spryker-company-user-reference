@@ -53,4 +53,24 @@ class CompanyUserReferenceRepository extends AbstractRepository implements Compa
 
         return $entity->getFkCompany();
     }
+
+    /**
+     * @param string $companyUserReference
+     *
+     * @return int|null
+     */
+    public function findIdCompanyBusinessUnitByCompanyUserReference(string $companyUserReference): ?int
+    {
+        $entity = $this->getFactory()
+            ->getCompanyUserPropelQuery()
+            ->clear()
+            ->filterByCompanyUserReference($companyUserReference)
+            ->findOne();
+
+        if ($entity === null) {
+            return null;
+        }
+
+        return $entity->getFkCompanyBusinessUnit();
+    }
 }
