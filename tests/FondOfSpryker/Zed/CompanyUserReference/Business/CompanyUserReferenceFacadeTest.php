@@ -4,8 +4,10 @@ namespace FondOfSpryker\Zed\CompanyUserReference\Business;
 
 use Codeception\Test\Unit;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGeneratorInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyBusinessUnitReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -48,6 +50,16 @@ class CompanyUserReferenceFacadeTest extends Unit
     protected $companyTransferMock;
 
     /**
+     * @var \FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyBusinessUnitReaderInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $companyBusinessUnitReaderMock;
+
+    /**
+     * @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $companyBusinessUnitTransferMock;
+
+    /**
      * @var \FondOfSpryker\Zed\CompanyUserReference\Business\CompanyUserReferenceFacade
      */
     protected $companyUserReferenceFacade;
@@ -82,6 +94,14 @@ class CompanyUserReferenceFacadeTest extends Unit
             ->getMock();
 
         $this->companyTransferMock = $this->getMockBuilder(CompanyTransfer::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->companyBusinessUnitReaderMock = $this->getMockBuilder(CompanyBusinessUnitReaderInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->companyBusinessUnitTransferMock = $this->getMockBuilder(CompanyBusinessUnitTransfer::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -151,6 +171,30 @@ class CompanyUserReferenceFacadeTest extends Unit
         static::assertEquals(
             $this->companyTransferMock,
             $this->companyUserReferenceFacade->getCompanyByCompanyUserReference(
+                $companyUserReference,
+            ),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCompanyBusinessUnitByCompanyUserReference(): void
+    {
+        $companyUserReference = 'FOO--CU-1';
+
+        $this->factoryMock->expects(static::atLeastOnce())
+            ->method('createCompanyBusinessUnitReader')
+            ->willReturn($this->companyBusinessUnitReaderMock);
+
+        $this->companyBusinessUnitReaderMock->expects(static::atLeastOnce())
+            ->method('getByCompanyUserReference')
+            ->with($companyUserReference)
+            ->willReturn($this->companyBusinessUnitTransferMock);
+
+        static::assertEquals(
+            $this->companyBusinessUnitTransferMock,
+            $this->companyUserReferenceFacade->getCompanyBusinessUnitByCompanyUserReference(
                 $companyUserReference,
             ),
         );

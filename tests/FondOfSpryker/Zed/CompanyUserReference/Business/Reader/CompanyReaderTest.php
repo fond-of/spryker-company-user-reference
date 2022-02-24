@@ -20,7 +20,7 @@ class CompanyReaderTest extends Unit
     protected $companyFacadeMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\CompanyUserTransfer
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\CompanyTransfer
      */
     protected $companyTransferMock;
 

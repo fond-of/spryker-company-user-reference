@@ -4,11 +4,14 @@ namespace FondOfSpryker\Zed\CompanyUserReference\Business;
 
 use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGenerator;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGeneratorInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyBusinessUnitReader;
+use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyBusinessUnitReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyReader;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReader;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\CompanyUserReferenceDependencyProvider;
+use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToCompanyBusinessUnitFacadeInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToCompanyFacadeInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToSequenceNumberFacadeInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToStoreFacadeInterface;
@@ -55,11 +58,30 @@ class CompanyUserReferenceBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyBusinessUnitReaderInterface
+     */
+    public function createCompanyBusinessUnitReader(): CompanyBusinessUnitReaderInterface
+    {
+        return new CompanyBusinessUnitReader(
+            $this->getRepository(),
+            $this->getCompanyBusinessUnitFacade(),
+        );
+    }
+
+    /**
      * @return \FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToCompanyFacadeInterface
      */
     protected function getCompanyFacade(): CompanyUserReferenceToCompanyFacadeInterface
     {
         return $this->getProvidedDependency(CompanyUserReferenceDependencyProvider::FACADE_COMPANY);
+    }
+
+    /**
+     * @return \FondOfSpryker\Zed\CompanyUserReference\Dependency\Facade\CompanyUserReferenceToCompanyBusinessUnitFacadeInterface
+     */
+    protected function getCompanyBusinessUnitFacade(): CompanyUserReferenceToCompanyBusinessUnitFacadeInterface
+    {
+        return $this->getProvidedDependency(CompanyUserReferenceDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
     }
 
     /**
