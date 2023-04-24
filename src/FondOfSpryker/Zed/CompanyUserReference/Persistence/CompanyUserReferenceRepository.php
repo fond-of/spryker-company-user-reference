@@ -3,9 +3,12 @@
 namespace FondOfSpryker\Zed\CompanyUserReference\Persistence;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
+ * @codeCoverageIgnore
+ *
  * @method \FondOfSpryker\Zed\CompanyUserReference\Persistence\CompanyUserReferencePersistenceFactory getFactory()
  */
 class CompanyUserReferenceRepository extends AbstractRepository implements CompanyUserReferenceRepositoryInterface
@@ -72,5 +75,27 @@ class CompanyUserReferenceRepository extends AbstractRepository implements Compa
         }
 
         return $entity->getFkCompanyBusinessUnit();
+    }
+
+    /**
+     * @param string $companyUserReference
+     * @param int $fkCustomer
+     *
+     * @return int|null
+     */
+    public function findIdCompanyUserByCompanyUserReferenceAndFkCustomer(
+        string $companyUserReference,
+        int $fkCustomer
+    ): ?int {
+        /** @var int|null $idCompanyUser */
+        $idCompanyUser = $this->getFactory()
+            ->getCompanyUserPropelQuery()
+            ->clear()
+            ->filterByCompanyUserReference($companyUserReference)
+            ->filterByFkCustomer($fkCustomer)
+            ->select([SpyCompanyUserTableMap::COL_ID_COMPANY_USER])
+            ->findOne();
+
+        return $idCompanyUser;
     }
 }

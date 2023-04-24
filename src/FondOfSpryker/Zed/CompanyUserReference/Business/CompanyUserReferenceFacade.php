@@ -57,9 +57,7 @@ class CompanyUserReferenceFacade extends AbstractFacade implements CompanyUserRe
     }
 
     /**
-     * Specifications:
-     *  - Finds company business unit by reference.
-     *  - Returns company business unit transfer.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -70,5 +68,25 @@ class CompanyUserReferenceFacade extends AbstractFacade implements CompanyUserRe
     public function getCompanyBusinessUnitByCompanyUserReference(string $companyUserReference): ?CompanyBusinessUnitTransfer
     {
         return $this->getFactory()->createCompanyBusinessUnitReader()->getByCompanyUserReference($companyUserReference);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $companyUserReference
+     * @param int $idCustomer
+     *
+     * @return int|null
+     */
+    public function getIdCompanyUserByCompanyUserReferenceAndIdCustomer(
+        string $companyUserReference,
+        int $idCustomer
+    ): ?int {
+        return $this->getRepository()->findIdCompanyUserByCompanyUserReferenceAndFkCustomer(
+            $companyUserReference,
+            $idCustomer,
+        );
     }
 }

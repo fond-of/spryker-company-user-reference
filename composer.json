@@ -9,16 +9,15 @@
     }
   ],
   "require": {
-    "php": ">=7.3",
+    "php": ">=8.0",
     "spryker/store": "^1.1.0",
     "spryker/sequence-number": "^1.0.0 || ^2.0.0 || ^3.0.0",
     "spryker/company": "^1.2.0",
     "spryker/company-business-unit": "^1.6.0 || ^2.0.0",
-    "spryker/company-user-extension": "^1.0.0",
-    "spryker/zed-request": "^1.0.0 || ^2.0.0 || ^3.0.0"
+    "spryker/company-user-extension": "^1.0.0"
   },
   "require-dev": {
-    "fond-of-codeception/spryker": "^1.0",
+    "fond-of-codeception/spryker": "*",
     "spryker/code-sniffer": "*",
     "spryker-sdk/phpstan-spryker": "*",
     "spryker/company-user": "*"
