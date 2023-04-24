@@ -7,10 +7,12 @@ use FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferen
 use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyBusinessUnitReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyReaderInterface;
 use FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface;
+use FondOfSpryker\Zed\CompanyUserReference\Persistence\CompanyUserReferenceRepository;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class CompanyUserReferenceFacadeTest extends Unit
 {
@@ -20,49 +22,54 @@ class CompanyUserReferenceFacadeTest extends Unit
     protected $factoryMock;
 
     /**
+     * @var \FondOfSpryker\Zed\CompanyUserReference\Persistence\CompanyUserReferenceRepository|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected MockObject|CompanyUserReferenceRepository $repositoryMock;
+
+    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Business\Generator\CompanyUserReferenceGeneratorInterface
      */
-    protected $companyUserReferenceGeneratorMock;
+    protected CompanyUserReferenceGeneratorInterface|MockObject $companyUserReferenceGeneratorMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\CompanyUserTransfer
      */
-    protected $companyUserTransferMock;
+    protected MockObject|CompanyUserTransfer $companyUserTransferMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyUserReaderInterface
      */
-    protected $companyUserReaderMock;
+    protected CompanyUserReaderInterface|MockObject $companyUserReaderMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    protected $companyUserResponseTransferMock;
+    protected MockObject|CompanyUserResponseTransfer $companyUserResponseTransferMock;
 
     /**
      * @var \FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyReaderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $companyReaderMock;
+    protected MockObject|CompanyReaderInterface $companyReaderMock;
 
     /**
      * @var \Generated\Shared\Transfer\CompanyTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $companyTransferMock;
+    protected MockObject|CompanyTransfer $companyTransferMock;
 
     /**
      * @var \FondOfSpryker\Zed\CompanyUserReference\Business\Reader\CompanyBusinessUnitReaderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $companyBusinessUnitReaderMock;
+    protected CompanyBusinessUnitReaderInterface|MockObject $companyBusinessUnitReaderMock;
 
     /**
      * @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $companyBusinessUnitTransferMock;
+    protected CompanyBusinessUnitTransfer|MockObject $companyBusinessUnitTransferMock;
 
     /**
      * @var \FondOfSpryker\Zed\CompanyUserReference\Business\CompanyUserReferenceFacade
      */
-    protected $companyUserReferenceFacade;
+    protected CompanyUserReferenceFacade $companyUserReferenceFacade;
 
     /**
      * @return void
@@ -70,6 +77,10 @@ class CompanyUserReferenceFacadeTest extends Unit
     protected function _before(): void
     {
         $this->factoryMock = $this->getMockBuilder(CompanyUserReferenceBusinessFactory::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->repositoryMock = $this->getMockBuilder(CompanyUserReferenceRepository::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -107,6 +118,7 @@ class CompanyUserReferenceFacadeTest extends Unit
 
         $this->companyUserReferenceFacade = new CompanyUserReferenceFacade();
         $this->companyUserReferenceFacade->setFactory($this->factoryMock);
+        $this->companyUserReferenceFacade->setRepository($this->repositoryMock);
     }
 
     /**
@@ -196,6 +208,29 @@ class CompanyUserReferenceFacadeTest extends Unit
             $this->companyBusinessUnitTransferMock,
             $this->companyUserReferenceFacade->getCompanyBusinessUnitByCompanyUserReference(
                 $companyUserReference,
+            ),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetIdCompanyUserByCompanyUserReferenceAndIdCustomer(): void
+    {
+        $companyUserReference = 'foo';
+        $idCustomer = 1;
+        $idCompanyUser = 3;
+
+        $this->repositoryMock->expects(static::atLeastOnce())
+            ->method('findIdCompanyUserByCompanyUserReferenceAndFkCustomer')
+            ->with($companyUserReference, $idCustomer)
+            ->willReturn($idCompanyUser);
+
+        static::assertEquals(
+            $idCompanyUser,
+            $this->companyUserReferenceFacade->getIdCompanyUserByCompanyUserReferenceAndIdCustomer(
+                $companyUserReference,
+                $idCustomer,
             ),
         );
     }

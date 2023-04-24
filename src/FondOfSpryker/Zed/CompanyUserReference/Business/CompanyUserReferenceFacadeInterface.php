@@ -63,4 +63,21 @@ interface CompanyUserReferenceFacadeInterface
     public function getCompanyBusinessUnitByCompanyUserReference(
         string $companyUserReference
     ): ?CompanyBusinessUnitTransfer;
+
+    /**
+     *  Specifications:
+     *  - Finds company user id by company user reference and customer id.
+     *  - Returns company user id.
+     *
+     * @api
+     *
+     * @param string $companyUserReference
+     * @param int $idCustomer
+     *
+     * @return int|null
+     */
+    public function getIdCompanyUserByCompanyUserReferenceAndIdCustomer(
+        string $companyUserReference,
+        int $idCustomer
+    ): ?int;
 }
